@@ -1,24 +1,32 @@
-import './style.css'
-import typescriptLogo from './typescript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.ts'
+import * as THREE from 'three';
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`
+const width = window.innerWidth, height = window.innerHeight;
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+// init
+
+const camera = new THREE.PerspectiveCamera( 70, width / height, 0.01, 10 );
+camera.position.z = 1;
+
+const scene = new THREE.Scene();
+
+const geometry = new THREE.BoxGeometry( 0.2, 0.2, 0.2 );
+const material = new THREE.MeshNormalMaterial();
+
+const mesh = new THREE.Mesh( geometry, material );
+scene.add(mesh);
+
+const renderer = new THREE.WebGLRenderer( { antialias: true } );
+renderer.setSize( width, height );
+renderer.setAnimationLoop( animate );
+document.body.appendChild( renderer.domElement );
+
+// animation
+
+function animate(time) {
+
+	mesh.rotation.x = time / 2000;
+	mesh.rotation.y = time / 1000;
+
+	renderer.render( scene, camera );
+
+}
