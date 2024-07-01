@@ -1,31 +1,30 @@
-import * as THREE from 'three';
+import { Vector3, WebGLRenderer } from 'three';
 
-const width = window.innerWidth,
-  height = window.innerHeight;
+import { handleWindowResize } from './event-handlers';
+import { createPerspectiveCamera, createPlayer, createSceneBase } from './objects';
+import { keyboardController } from './controllers';
+const app = document.getElementById('app')!;
+const renderer = new WebGLRenderer({ antialias: true, alpha: true });
 
-// init
+renderer.setSize(window.innerWidth, window.innerHeight);
 
-const camera = new THREE.PerspectiveCamera(70, width / height, 0.01, 10);
-camera.position.z = 1;
+app.append(renderer.domElement);
 
-const scene = new THREE.Scene();
+const scene = createSceneBase();
+const player = createPlayer();
+const camera = createPerspectiveCamera();
 
-const geometry = new THREE.BoxGeometry(0.2, 0.2, 0.2);
-const material = new THREE.MeshNormalMaterial();
+handleWindowResize(camera, renderer);
 
-const mesh = new THREE.Mesh(geometry, material);
-scene.add(mesh);
+// player.group.add(camera);
+scene.add(camera);
+scene.add(player.group);
 
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(width, height);
-renderer.setAnimationLoop(animate);
-document.body.appendChild(renderer.domElement);
+const animate = () => {
+  const vector = new Vector3(...keyboardController.direction);
 
-// animation
-
-function animate(time: number) {
-  mesh.rotation.x = time / 2000;
-  mesh.rotation.y = time / 1000;
-
+  player.render(vector);
   renderer.render(scene, camera);
-}
+};
+
+renderer.setAnimationLoop(animate);
