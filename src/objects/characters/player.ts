@@ -1,6 +1,7 @@
 import { TextureLoader, MeshBasicMaterial, FrontSide, Group, PlaneGeometry, Mesh, Vector3 } from 'three';
 
 import { TextureAnimator } from '../../texture-animator';
+import { playerSettings } from '../../settings';
 
 export const createPlayer = () => {
   const texture = new TextureLoader().load('player/Idle.png');
@@ -11,7 +12,7 @@ export const createPlayer = () => {
     side: FrontSide,
     map: texture,
     alphaHash: true,
-    color: 0xfb601d,
+    color: playerSettings.color,
   });
 
   const group = new Group();
@@ -28,7 +29,7 @@ export const createPlayer = () => {
       animator.update(15);
 
       mesh.rotation.z = isMoving ? Math.atan2(direction.y, direction.x) + Math.PI / 2 : mesh.rotation.z;
-      group.position.add(direction.multiplyScalar(0.02));
+      group.position.add(direction.multiplyScalar(playerSettings.speed));
     },
   };
 };
