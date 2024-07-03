@@ -1,4 +1,4 @@
-import { TextureLoader, MeshBasicMaterial, FrontSide, Group, PlaneGeometry, Mesh, Vector3 } from 'three';
+import { TextureLoader, MeshBasicMaterial, FrontSide, Group, PlaneGeometry, Mesh, Vector3, Quaternion } from 'three';
 
 import { TextureAnimator } from '../../texture-animator';
 import { playerSettings } from '../../settings';
@@ -11,10 +11,13 @@ export const createPlayer = () => {
   const animator = new TextureAnimator(texture, 4, 3, 12, 128);
   const animator2 = new TextureAnimator(texture2, 5, 4, 20, 20);
 
+  const quaternion = new Quaternion();
+  const yAxis = new Vector3(0, -1, 0); //texture facing down
+
   const material = new MeshBasicMaterial({
     side: FrontSide,
     map: texture,
-    alphaHash: true,
+    transparent: true,
     color: playerSettings.color,
   });
 
@@ -34,6 +37,7 @@ export const createPlayer = () => {
           material.map = texture2;
         }
 
+        quaternion.setFromUnitVectors(yAxis, direction.clone().normalize());
         animator2.update(15);
       } else {
         if (material.map?.id !== texture.id) {
@@ -43,7 +47,7 @@ export const createPlayer = () => {
         animator.update(15);
       }
 
-      mesh.rotation.z = isMoving ? Math.atan2(direction.y, direction.x) + Math.PI / 2 : mesh.rotation.z;
+      mesh.quaternion.slerp(quaternion, 0.2);
       group.position.add(direction.multiplyScalar(playerSettings.speed));
     },
   };
