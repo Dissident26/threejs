@@ -4,6 +4,7 @@ import { textureLoader } from './texture-loader';
 
 export const playerIdle = textureLoader.load('player/Idle.png');
 export const playerRun = textureLoader.load('player/Run.png');
+export const playerAttack = textureLoader.load('cursor/FlameBall.png');
 
 export const playerTextureAnimationMap: TextureAnimationMapDictionary = {
   [State.Idle]: {

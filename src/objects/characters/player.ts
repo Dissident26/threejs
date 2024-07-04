@@ -7,7 +7,7 @@ import { StateAnimator, StateObserver } from '../../states';
 export const createPlayer = () => {
   const quaternion = new Quaternion();
   const yAxis = new Vector3(0, -1, 0); //texture facing down
-
+  const group = new Group();
   const material = new MeshBasicMaterial({
     side: FrontSide,
     transparent: true,
@@ -16,7 +16,6 @@ export const createPlayer = () => {
 
   const stateAnimator = new StateAnimator(material, playerTextureAnimationMap);
 
-  const group = new Group();
   const geometry = new PlaneGeometry(1, 1);
   const mesh = new Mesh(geometry, material);
 
