@@ -16,7 +16,6 @@ const camera = createPerspectiveCamera();
 
 handleWindowResize(camera, renderer);
 
-// player.group.add(camera);
 scene.add(camera);
 scene.add(player.group);
 
@@ -24,6 +23,7 @@ const animate = () => {
   const vector = new Vector3(...keyboardController.direction);
 
   player.render(vector);
+  camera.position.add(vector);
   renderer.render(scene, camera);
 };
 
