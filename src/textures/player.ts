@@ -2,9 +2,9 @@ import { TextureAnimationMapDictionary, State } from '../states';
 import { TextureAnimator } from '../texture-animator';
 import { textureLoader } from './texture-loader';
 
-export const playerIdle = textureLoader.load('player/Idle.png');
-export const playerRun = textureLoader.load('player/Run.png');
-export const playerAttack = textureLoader.load('cursor/FlameBall.png');
+export const playerIdle = textureLoader.load('textures/player/Idle.png');
+export const playerRun = textureLoader.load('textures/player/Run.png');
+export const playerAttack = textureLoader.load('textures/cursor/FlameBall.png');
 
 export const playerTextureAnimationMap: TextureAnimationMapDictionary = {
   [State.Idle]: {
