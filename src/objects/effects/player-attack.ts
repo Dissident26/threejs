@@ -25,13 +25,13 @@ export const createPlayerAttack = () => {
         const projection = new Vector3(dx, dy, 1);
 
         vectorBase = projection.unproject(camera);
-        // vectorBase.sub(camera.position); ??
+        vectorBase.sub(camera.position);
         vectorBase.setZ(0);
       } else {
         vectorBase.set(0, 0, 0);
       }
 
-      group.position.lerp(vectorBase.sub(group.position), 0.1);
+      group.position.lerp(vectorBase, 0.1);
       //   group.visible = mouseController.keyPressed;
     },
   };

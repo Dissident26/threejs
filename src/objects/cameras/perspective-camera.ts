@@ -4,7 +4,7 @@ import { cameraSettings } from '../../settings';
 export const createPerspectiveCamera = () => {
   const camera = new PerspectiveCamera(cameraSettings.fov, cameraSettings.aspectRatio, cameraSettings.near, cameraSettings.far);
 
-  camera.position.z = 2;
+  camera.position.z = cameraSettings.far;
 
   return camera;
 };
