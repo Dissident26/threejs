@@ -32,7 +32,7 @@ export const createPlayerAttack = () => {
       }
 
       group.position.lerp(vectorBase, 0.1);
-      //   group.visible = mouseController.keyPressed;
+      group.visible = !(group.position.distanceTo(new Vector3()) < 0.1);
     },
   };
 };
