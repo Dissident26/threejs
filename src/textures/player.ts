@@ -9,12 +9,26 @@ export const playerAttack = textureLoader.load('textures/cursor/FlameBall.png');
 export const playerTextureAnimationMap: TextureAnimationMapDictionary = {
   [State.Idle]: {
     texture: playerIdle,
-    animator: new TextureAnimator(playerIdle, 4, 3, 12, 1000 / 120, true),
+    animator: new TextureAnimator({
+      texture: playerIdle,
+      tilesHoriz: 4,
+      tilesVert: 3,
+      numTiles: 12,
+      tileDispDuration: 1000 / 120,
+      isTilesVertical: true,
+    }),
     animationSpeed: 1.5,
   },
   [State.Run]: {
     texture: playerRun,
-    animator: new TextureAnimator(playerRun, 5, 4, 20, 1000 / 200, true),
+    animator: new TextureAnimator({
+      texture: playerRun,
+      tilesHoriz: 5,
+      tilesVert: 4,
+      numTiles: 20,
+      tileDispDuration: 1000 / 200,
+      isTilesVertical: true,
+    }),
     animationSpeed: 1.5,
   },
 };

@@ -1,5 +1,14 @@
 import { RepeatWrapping, Texture } from 'three';
 
+export interface ITextureAnimatorArgs {
+  texture: Texture;
+  tilesHoriz: number;
+  tilesVert: number;
+  numTiles: number;
+  tileDispDuration: number;
+  isTilesVertical: boolean;
+}
+
 export class TextureAnimator {
   texture: Texture;
   tilesHorizontal: number;
@@ -11,7 +20,7 @@ export class TextureAnimator {
   currentDisplayTime = 0;
   currentTile = 0;
 
-  constructor(texture: Texture, tilesHoriz: number, tilesVert: number, numTiles: number, tileDispDuration: number, isTilesVertical = false) {
+  constructor({ texture, tilesHoriz, tilesVert, numTiles, tileDispDuration, isTilesVertical }: ITextureAnimatorArgs) {
     this.texture = texture;
     this.numberOfTiles = numTiles;
     this.tileDisplayDuration = tileDispDuration;
