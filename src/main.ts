@@ -1,4 +1,4 @@
-import { Vector3, WebGLRenderer } from 'three';
+import { AxesHelper, Raycaster, Vector3, WebGLRenderer } from 'three';
 
 import { handleWindowResize } from './event-handlers';
 import { createPerspectiveCamera, createPlayer, createPlayerAttack, createSceneBase } from './objects';
@@ -26,8 +26,20 @@ scene.add(camera);
 scene.add(player.group);
 scene.add(crate.group, crate2.group);
 
+const raycaster = new Raycaster();
+
 const animate = () => {
   const vector = new Vector3(...keyboardController.direction);
+
+  raycaster.set(player.group.position, vector);
+  const intersects = raycaster.intersectObjects(scene.children);
+  // const intersects2 = raycaster(scene.children);
+  for (let i = 0; i < intersects.length; i++) {
+    if (!(intersects[i].object instanceof AxesHelper)) {
+      console.log(intersects[i]);
+      intersects[i].object.material.color.set(0xff0000);
+    }
+  }
 
   player.render(vector);
   camera.position.add(vector);

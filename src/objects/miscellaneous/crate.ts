@@ -16,7 +16,7 @@ export const createCrate = ({ size, position }: CreateCrateargs) => {
   const geometry = new BoxGeometry(size, size, size / 2);
   const mesh = new Mesh(geometry, material);
 
-  mesh.position.z = size / 2;
+  mesh.position.z = size / 4;
   mesh.position.x = position.x;
   mesh.position.y = position.y;
 
