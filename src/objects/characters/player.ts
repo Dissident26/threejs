@@ -16,7 +16,7 @@ export const createPlayer = () => {
 
   const stateAnimator = new StateAnimator(material, playerTextureAnimationMap);
 
-  const geometry = new PlaneGeometry(1, 1);
+  const geometry = new PlaneGeometry(1.5, 1.5);
   const mesh = new Mesh(geometry, material);
 
   group.add(mesh);
