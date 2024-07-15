@@ -31,7 +31,7 @@ export const createPlayerAttack = () => {
         vectorBase.set(0, 0, 0);
       }
 
-      group.position.lerp(vectorBase, 0.1);
+      group.position.lerp(vectorBase.clampLength(0, 1), 0.2);
       group.visible = !(group.position.distanceTo(new Vector3()) < 0.1);
     },
   };
