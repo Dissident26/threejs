@@ -1,8 +1,9 @@
-import { MeshBasicMaterial, FrontSide, Group, PlaneGeometry, Mesh, Vector3, Quaternion } from 'three';
+import { MeshBasicMaterial, FrontSide, Group, PlaneGeometry, Mesh, Vector3, Quaternion, Scene } from 'three';
 
 import { playerSettings } from '../../settings';
 import { playerTextureAnimationMap } from '../../textures';
 import { StateAnimator, StateObserver } from '../../states';
+import { handlePlayerRayCast } from '../../ray-caster-handlers';
 
 export const createPlayer = () => {
   const quaternion = new Quaternion();
@@ -23,11 +24,11 @@ export const createPlayer = () => {
 
   return {
     group,
-    render(direction: Vector3) {
+    render(direction: Vector3, scene: Scene) {
       const state = StateObserver.getState(direction);
 
       stateAnimator.animate(state);
-      //check condition further
+      handlePlayerRayCast(group.position, direction, scene);
       direction.length() && quaternion.setFromUnitVectors(yAxis, direction.clone().normalize());
       mesh.quaternion.slerp(quaternion, 0.2);
       group.position.add(direction.multiplyScalar(playerSettings.speed));

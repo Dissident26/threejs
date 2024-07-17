@@ -14,3 +14,7 @@ export interface TextureAnimationMapRecord {
 }
 
 export type TextureAnimationMapDictionary = Record<State, TextureAnimationMapRecord>;
+
+export enum ObjectState {
+  Blocking,
+}

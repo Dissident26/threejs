@@ -1,5 +1,6 @@
-import { BoxGeometry, DoubleSide, Group, Mesh, MeshBasicMaterial, Vector3 } from 'three';
+import { BoxGeometry, DoubleSide, Mesh, MeshBasicMaterial, Vector3 } from 'three';
 import { crateTexture } from '../../textures';
+import { ObjectState } from '../../states';
 
 interface CreateCrateargs {
   size: number;
@@ -7,7 +8,6 @@ interface CreateCrateargs {
 }
 
 export const createCrate = ({ size, position }: CreateCrateargs) => {
-  const group = new Group();
   const material = new MeshBasicMaterial({
     side: DoubleSide,
     map: crateTexture,
@@ -16,16 +16,14 @@ export const createCrate = ({ size, position }: CreateCrateargs) => {
   const geometry = new BoxGeometry(size, size, size / 2);
   const mesh = new Mesh(geometry, material);
 
+  mesh.userData = {
+    ...mesh.userData,
+    objectState: ObjectState.Blocking,
+  };
+
   mesh.position.z = size / 4;
   mesh.position.x = position.x;
   mesh.position.y = position.y;
 
-  group.add(mesh);
-
-  return {
-    group,
-    render() {
-      // ??
-    },
-  };
+  return mesh;
 };
