@@ -2,12 +2,12 @@ import { BoxGeometry, DoubleSide, Mesh, MeshBasicMaterial, Vector3 } from 'three
 import { crateTexture } from '../../textures';
 import { ObjectState } from '../../states';
 
-interface CreateCrateargs {
+interface CreateCrateArgs {
   size: number;
   position: Vector3;
 }
 
-export const createCrate = ({ size, position }: CreateCrateargs) => {
+export const createCrate = ({ size, position }: CreateCrateArgs) => {
   const material = new MeshBasicMaterial({
     side: DoubleSide,
     map: crateTexture,
