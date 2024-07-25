@@ -2,6 +2,7 @@ import { FrontSide, Group, Mesh, MeshBasicMaterial, PerspectiveCamera, PlaneGeom
 import { mouseController } from '../../controllers';
 
 import { playerAttack } from '../../textures';
+import { createPlayerAttackDirectionalLight, createPlayerAttackPointLight } from '../lights';
 
 export const createPlayerAttack = () => {
   const group = new Group();
@@ -10,10 +11,14 @@ export const createPlayerAttack = () => {
     side: FrontSide,
     transparent: true,
     map: playerAttack,
+    shadowSide: FrontSide,
   });
   const mesh = new Mesh(geometry, material);
 
-  group.add(mesh);
+  const pointLight = createPlayerAttackPointLight();
+  const directionalLight = createPlayerAttackDirectionalLight();
+
+  group.add(mesh, pointLight, directionalLight);
 
   let vectorBase = new Vector3();
 
@@ -32,6 +37,7 @@ export const createPlayerAttack = () => {
       }
 
       group.position.lerp(vectorBase.clampLength(0, 1), 0.2);
+
       group.visible = !(group.position.distanceTo(new Vector3()) < 0.1);
     },
   };

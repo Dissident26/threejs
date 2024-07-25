@@ -13,6 +13,7 @@ export const createPlayer = () => {
     side: FrontSide,
     transparent: true,
     color: playerSettings.color,
+    shadowSide: FrontSide,
   });
 
   const stateAnimator = new StateAnimator(material, playerTextureAnimationMap);
