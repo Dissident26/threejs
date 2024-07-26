@@ -1,6 +1,6 @@
 import { MeshBasicMaterial, FrontSide, Group, PlaneGeometry, Mesh, Vector3, Quaternion, Scene } from 'three';
 
-import { playerSettings } from '../../settings';
+import { playerSettings, videoSettings } from '../../settings';
 import { playerTextureAnimationMap } from '../../textures';
 import { StateAnimator, StateObserver } from '../../states';
 import { handlePlayerRayCast } from '../../ray-caster-handlers';
@@ -14,12 +14,16 @@ export const createPlayer = () => {
     transparent: true,
     color: playerSettings.color,
     shadowSide: FrontSide,
+    alphaTest: 0.5,
   });
 
   const stateAnimator = new StateAnimator(material, playerTextureAnimationMap);
 
   const geometry = new PlaneGeometry(1.5, 1.5);
   const mesh = new Mesh(geometry, material);
+
+  mesh.castShadow = videoSettings.isShadowsEnabled;
+  group.position.z = 0.02;
 
   group.add(mesh);
 

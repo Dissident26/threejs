@@ -1,14 +1,15 @@
-import { Mesh, MeshLambertMaterial, PlaneGeometry, Scene } from 'three';
-import { globalLight } from '..';
+import { Scene } from 'three';
+
+import { getBasicSurface, getGlobalDirectionalLight, globalHemisphereLight } from '..';
 
 export const createSceneBase = () => {
   const scene = new Scene();
+  const surface = getBasicSurface();
+  const globalDirectionalLight = getGlobalDirectionalLight();
 
-  const ground = new Mesh(new PlaneGeometry(5, 5), new MeshLambertMaterial({ color: 0xffffff }));
+  globalDirectionalLight.position.set(2, 2, 2);
 
-  ground.receiveShadow = true;
-
-  scene.add(ground, globalLight);
+  scene.add(surface, globalHemisphereLight, globalDirectionalLight);
 
   return scene;
 };
