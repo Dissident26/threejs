@@ -5,6 +5,8 @@ import { createPerspectiveCamera, createPlayer, createPlayerAttack, createSceneB
 import { keyboardController } from './controllers';
 import { createCrate } from './objects/miscellaneous';
 
+import { MTLLoader, OBJLoader } from 'three/examples/jsm/Addons.js';
+
 const app = document.getElementById('app')!;
 const renderer = new WebGLRenderer({ antialias: true, alpha: true });
 
@@ -22,6 +24,32 @@ const crate2 = createCrate({ size: 0.5, position: new Vector3(1, 0.5) }); //??
 handleWindowResize(camera, renderer);
 
 player.group.add(playerAttack.group);
+
+const mtlLoader = new MTLLoader();
+mtlLoader.load(
+  'models/cube/DeadTree.mtl',
+  (materials) => {
+    materials.preload();
+    // materials.materials['Material'].
+    // console.log(materials);
+    const objLoader = new OBJLoader();
+    objLoader.setMaterials(materials);
+    // console.log(objLoader.materials);
+    objLoader.load(
+      'models/miscellaneous/DeadTree.obj',
+      (object) => {
+        object.scale.set(0.1, 0.1, 0.1);
+        object.rotateX(Math.PI / 2);
+        console.log(object);
+        scene.add(object);
+      },
+      undefined,
+      console.error,
+    );
+  },
+  undefined,
+  console.error,
+);
 
 scene.add(camera);
 scene.add(player.group);
