@@ -3,9 +3,7 @@ import { Vector3, WebGLRenderer } from 'three';
 import { handleWindowResize } from './event-handlers';
 import { createPerspectiveCamera, createPlayer, createPlayerAttack, createSceneBase } from './objects';
 import { keyboardController } from './controllers';
-import { createCrate } from './objects/miscellaneous';
-
-import { MTLLoader, OBJLoader } from 'three/examples/jsm/Addons.js';
+import { createCrate, createDeadTree } from './objects/miscellaneous';
 
 const app = document.getElementById('app')!;
 const renderer = new WebGLRenderer({ antialias: true, alpha: true });
@@ -18,42 +16,19 @@ const scene = createSceneBase();
 const player = createPlayer();
 const camera = createPerspectiveCamera();
 const playerAttack = createPlayerAttack();
-const crate = createCrate({ size: 0.5, position: new Vector3(0.5, 1) }); //??
-const crate2 = createCrate({ size: 0.5, position: new Vector3(1, 0.5) }); //??
+const crate = createCrate({ size: 0.5, position: new Vector3(0.5, 1) });
+const crate2 = createCrate({ size: 0.5, position: new Vector3(1, 0.5) });
+const tree = await createDeadTree({ size: 0.1, position: new Vector3(-1, -1) });
+const tree2 = await createDeadTree({ size: 0.1, position: new Vector3(1, -1) });
+const tree3 = await createDeadTree({ size: 0.1, position: new Vector3(-1, 1) });
 
 handleWindowResize(camera, renderer);
 
 player.group.add(playerAttack.group);
 
-const mtlLoader = new MTLLoader();
-
-mtlLoader.setPath('models/miscellaneous/dead-tree/').load(
-  'DeadTree.mtl',
-  (materials) => {
-    materials.preload();
-
-    const objLoader = new OBJLoader();
-    objLoader.setMaterials(materials);
-
-    objLoader.load(
-      'models/miscellaneous/dead-tree/DeadTree.obj',
-      (object) => {
-        object.scale.set(0.1, 0.1, 0.1);
-        object.rotateX(Math.PI / 2);
-        console.log(object);
-        scene.add(object);
-      },
-      undefined,
-      console.error,
-    );
-  },
-  undefined,
-  console.error,
-);
-
 scene.add(camera);
 scene.add(player.group);
-scene.add(crate, crate2);
+scene.add(crate, crate2, tree, tree2, tree3);
 
 const animate = () => {
   const direction = new Vector3(...keyboardController.direction);
