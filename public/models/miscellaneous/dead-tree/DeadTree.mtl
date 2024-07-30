@@ -10,5 +10,5 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd textures\miscellaneous\BarkPine0009_1_S.jpg
-map_Bump textures\miscellaneous\PineBarkNRM.png
+map_Kd BarkPine0009_1_S.jpg
+map_Bump PineBarkNRM.png

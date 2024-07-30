@@ -26,17 +26,17 @@ handleWindowResize(camera, renderer);
 player.group.add(playerAttack.group);
 
 const mtlLoader = new MTLLoader();
-mtlLoader.load(
-  'models/cube/DeadTree.mtl',
+
+mtlLoader.setPath('models/miscellaneous/dead-tree/').load(
+  'DeadTree.mtl',
   (materials) => {
     materials.preload();
-    // materials.materials['Material'].
-    // console.log(materials);
+
     const objLoader = new OBJLoader();
     objLoader.setMaterials(materials);
-    // console.log(objLoader.materials);
+
     objLoader.load(
-      'models/miscellaneous/DeadTree.obj',
+      'models/miscellaneous/dead-tree/DeadTree.obj',
       (object) => {
         object.scale.set(0.1, 0.1, 0.1);
         object.rotateX(Math.PI / 2);
