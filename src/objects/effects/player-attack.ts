@@ -1,7 +1,8 @@
-import { FrontSide, Group, Mesh, MeshBasicMaterial, PerspectiveCamera, PlaneGeometry, Vector3 } from 'three';
+import { BackSide, FrontSide, Group, Mesh, MeshBasicMaterial, PerspectiveCamera, PlaneGeometry, Vector3 } from 'three';
 import { mouseController } from '../../controllers';
 
 import { playerAttack } from '../../textures';
+import { createPlayerAttackPointLight } from '../lights';
 
 export const createPlayerAttack = () => {
   const group = new Group();
@@ -10,10 +11,13 @@ export const createPlayerAttack = () => {
     side: FrontSide,
     transparent: true,
     map: playerAttack,
+    shadowSide: BackSide,
   });
   const mesh = new Mesh(geometry, material);
 
-  group.add(mesh);
+  const pointLight = createPlayerAttackPointLight();
+
+  group.add(mesh, pointLight);
 
   let vectorBase = new Vector3();
 

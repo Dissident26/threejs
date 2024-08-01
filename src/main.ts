@@ -1,14 +1,14 @@
-import { Vector3, WebGLRenderer } from 'three';
+import { Vector3 } from 'three';
 
 import { handleWindowResize } from './event-handlers';
 import { createPerspectiveCamera, createPlayer, createPlayerAttack, createSceneBase } from './objects';
 import { keyboardController } from './controllers';
 import { createCrate } from './objects/miscellaneous';
+import { getMainRenderer } from './main-renderer';
 
 const app = document.getElementById('app')!;
-const renderer = new WebGLRenderer({ antialias: true, alpha: true });
 
-renderer.setSize(window.innerWidth, window.innerHeight);
+const renderer = getMainRenderer();
 
 app.append(renderer.domElement);
 

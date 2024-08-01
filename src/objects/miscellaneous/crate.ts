@@ -1,6 +1,8 @@
-import { BoxGeometry, DoubleSide, Mesh, MeshBasicMaterial, Vector3 } from 'three';
+import { BackSide, BoxGeometry, DoubleSide, Mesh, MeshLambertMaterial, Vector3 } from 'three';
+
 import { crateTexture } from '../../textures';
 import { ObjectState } from '../../states';
+import { videoSettings } from '../../settings';
 
 interface CreateCrateArgs {
   size: number;
@@ -8,9 +10,10 @@ interface CreateCrateArgs {
 }
 
 export const createCrate = ({ size, position }: CreateCrateArgs) => {
-  const material = new MeshBasicMaterial({
+  const material = new MeshLambertMaterial({
     side: DoubleSide,
     map: crateTexture,
+    shadowSide: BackSide,
   });
 
   const geometry = new BoxGeometry(size, size, size / 2);
@@ -20,6 +23,9 @@ export const createCrate = ({ size, position }: CreateCrateArgs) => {
     ...mesh.userData,
     objectState: ObjectState.Blocking,
   };
+
+  mesh.castShadow = videoSettings.isShadowsEnabled;
+  mesh.receiveShadow = videoSettings.isShadowsEnabled;
 
   mesh.position.z = size / 4;
   mesh.position.x = position.x;
