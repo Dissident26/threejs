@@ -2,6 +2,7 @@ import { BoxGeometry, Mesh, MeshBasicMaterial, Vector3 } from 'three';
 
 import { objMtlLoader } from '../../loaders';
 import { ObjectState } from '../../states';
+import { videoSettings } from '../../settings';
 
 interface CreateDeadTreeArgs {
   size: number;
@@ -17,6 +18,8 @@ export const createDeadTree = async ({ size, position }: CreateDeadTreeArgs) => 
   group.position.y = position.y;
   group.position.z = -0.01;
 
+  group.rotateY(Math.floor(Math.random() * 10) + 1);
+
   const boundingBox = new Mesh(
     new BoxGeometry(2.5, 2.5, 2.5),
     new MeshBasicMaterial({
@@ -28,6 +31,13 @@ export const createDeadTree = async ({ size, position }: CreateDeadTreeArgs) => 
     ...boundingBox.userData,
     objectState: ObjectState.Blocking,
   };
+
+  if (videoSettings.isShadowsEnabled) {
+    group.children.forEach((child) => {
+      child.castShadow = videoSettings.isShadowsEnabled;
+      child.receiveShadow = videoSettings.isShadowsEnabled;
+    });
+  }
 
   group.add(boundingBox);
 
