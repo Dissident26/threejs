@@ -9,6 +9,6 @@ export const createSceneBase = () => {
   directionalLight.position.set(2, 2, 2);
 
   scene.add(globalHemisphereLight, directionalLight);
-
+  console.log(scene.children);
   return scene;
 };

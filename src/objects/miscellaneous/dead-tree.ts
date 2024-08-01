@@ -1,6 +1,7 @@
-import { Box3, Box3Helper, Mesh, Vector3 } from 'three';
+import { BoxGeometry, Mesh, MeshBasicMaterial, Vector3 } from 'three';
 
 import { objMtlLoader } from '../../loaders';
+import { ObjectState } from '../../states';
 
 interface CreateDeadTreeArgs {
   size: number;
@@ -16,15 +17,19 @@ export const createDeadTree = async ({ size, position }: CreateDeadTreeArgs) => 
   group.position.y = position.y;
   group.position.z = -0.01;
 
-  //   const box = new Box3();
+  const boundingBox = new Mesh(
+    new BoxGeometry(2.5, 2.5, 2.5),
+    new MeshBasicMaterial({
+      visible: false,
+    }),
+  );
 
-  //   box.setFromCenterAndSize(new Vector3(), new Vector3(2, 2, 2));
-  (group.children[0] as Mesh).geometry.computeBoundingBox();
-  (group.children[0] as Mesh).geometry.boundingBox?.expandByScalar(-1.5);
+  boundingBox.userData = {
+    ...boundingBox.userData,
+    objectState: ObjectState.Blocking,
+  };
 
-  //   box.setFromObject(group);
-  const helper = new Box3Helper((group.children[0] as Mesh).geometry.boundingBox!, 0xffff00);
-  group.add(helper);
+  group.add(boundingBox);
 
   return group;
 };
