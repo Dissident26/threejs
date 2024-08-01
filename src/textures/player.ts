@@ -1,6 +1,6 @@
+import { textureLoader } from '../loaders';
 import { TextureAnimationMapDictionary, State } from '../states';
 import { TextureAnimator } from '../texture-animator';
-import { textureLoader } from './texture-loader';
 
 export const playerIdle = textureLoader.load('textures/player/Idle.png');
 export const playerRun = textureLoader.load('textures/player/Run.png');

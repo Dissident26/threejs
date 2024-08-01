@@ -27,7 +27,7 @@ export const createCrate = ({ size, position }: CreateCrateArgs) => {
   mesh.castShadow = videoSettings.isShadowsEnabled;
   mesh.receiveShadow = videoSettings.isShadowsEnabled;
 
-  mesh.position.z = size / 4;
+  mesh.position.z = -0.01;
   mesh.position.x = position.x;
   mesh.position.y = position.y;
 
