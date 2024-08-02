@@ -23,6 +23,8 @@ export const createPlayer = () => {
   const mesh = new Mesh(geometry, material);
 
   mesh.castShadow = videoSettings.isShadowsEnabled;
+  mesh.receiveShadow = videoSettings.isShadowsEnabled;
+
   group.position.z = 0.02;
 
   group.add(mesh);
