@@ -4,6 +4,7 @@ import { playerSettings, videoSettings } from '../../settings';
 import { playerTextureAnimationMap } from '../../textures';
 import { StateAnimator, StateObserver } from '../../states';
 import { handlePlayerRayCast } from '../../ray-caster-handlers';
+import { createFootPrint, handleFootPrintRemoval } from '..';
 
 export const createPlayer = () => {
   const quaternion = new Quaternion();
@@ -31,14 +32,20 @@ export const createPlayer = () => {
 
   return {
     group,
-    render(direction: Vector3, scene: Scene) {
+    render(direction: Vector3, scene: Scene, surface: Mesh) {
       const state = StateObserver.getState(direction);
 
       stateAnimator.animate(state);
       handlePlayerRayCast(group.position, direction, scene);
-      direction.length() && quaternion.setFromUnitVectors(yAxis, direction.clone().normalize());
+
       mesh.quaternion.slerp(quaternion, 0.2);
       group.position.add(direction.multiplyScalar(playerSettings.speed));
+
+      if (direction.length()) {
+        quaternion.setFromUnitVectors(yAxis, direction.clone().normalize());
+        createFootPrint(surface, group.position, mesh.rotation);
+        handleFootPrintRemoval();
+      }
     },
   };
 };

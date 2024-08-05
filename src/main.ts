@@ -15,7 +15,7 @@ const stats = new Stats();
 
 app.append(renderer.domElement, stats.dom);
 
-const scene = createSceneBase();
+const { scene, surface } = createSceneBase();
 const player = createPlayer();
 const camera = createPerspectiveCamera();
 const playerAttack = createPlayerAttack();
@@ -40,9 +40,10 @@ const animate = () => {
   stats.begin();
   const direction = new Vector3(...keyboardController.direction);
 
-  player.render(direction, scene);
+  player.render(direction, scene, surface);
   camera.position.add(direction);
   playerAttack.render(camera);
+
   renderer.render(scene, camera);
   stats.end();
 };
