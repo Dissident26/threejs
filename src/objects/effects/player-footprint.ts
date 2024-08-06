@@ -16,22 +16,19 @@ class PlayerFootPrint {
   public footPrintGroup = new Group();
 
   public createFootPrint = throttle((surface: Mesh, position: Vector3, rotation: Euler) => {
-    const geometry = new DecalGeometry(surface, position, rotation, this.size);
-
+    const geometry = new DecalGeometry(surface, new Vector3(), new Euler(), this.size);
     const mesh = new Mesh(geometry, this.material.clone());
 
-    console.log(rotation, mesh.rotation);
-    console.log(position, mesh.position);
     //?? texture is upside down
-    //?? incorrect translate on moving on X
+
     if (this.isLeft) {
+      mesh.position.add(position);
+      mesh.rotateZ(rotation.z);
       mesh.translateX(-0.05);
-      // mesh.translateY(0.05);
-      console.log('left', mesh.position);
     } else {
+      mesh.position.add(position);
+      mesh.rotateZ(rotation.z);
       mesh.translateX(0.05);
-      // mesh.translateY(0.05);
-      console.log('right', mesh.position);
     }
 
     this.footPrintGroup.add(mesh);
