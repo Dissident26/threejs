@@ -16,6 +16,7 @@ export const createPlayer = () => {
     color: playerSettings.color,
     shadowSide: FrontSide,
     alphaTest: 0.5,
+    precision: 'highp',
   });
 
   const stateAnimator = new StateAnimator(material, playerTextureAnimationMap);
@@ -25,8 +26,6 @@ export const createPlayer = () => {
 
   mesh.castShadow = videoSettings.isShadowsEnabled;
   mesh.receiveShadow = videoSettings.isShadowsEnabled;
-
-  group.position.z = 0.02;
 
   group.add(mesh);
 
