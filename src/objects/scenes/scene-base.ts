@@ -1,6 +1,6 @@
 import { Scene } from 'three';
 
-import { getBasicSurface, getGlobalDirectionalLight, globalHemisphereLight } from '..';
+import { footPrintGroup, getBasicSurface, getGlobalDirectionalLight, globalHemisphereLight } from '..';
 
 export const createSceneBase = () => {
   const scene = new Scene();
@@ -9,7 +9,7 @@ export const createSceneBase = () => {
 
   globalDirectionalLight.position.set(2, 2, 2);
 
-  scene.add(surface, globalHemisphereLight, globalDirectionalLight);
+  scene.add(surface, globalHemisphereLight, globalDirectionalLight, footPrintGroup);
 
-  return scene;
+  return { scene, surface };
 };

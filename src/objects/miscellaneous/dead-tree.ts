@@ -16,7 +16,6 @@ export const createDeadTree = async ({ size, position }: CreateDeadTreeArgs) => 
 
   group.position.x = position.x;
   group.position.y = position.y;
-  group.position.z = -0.01;
 
   group.rotateY(Math.floor(Math.random() * 10) + 1);
 
