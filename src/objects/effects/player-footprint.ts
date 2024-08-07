@@ -1,4 +1,4 @@
-import { Euler, Group, Material, Mesh, MeshBasicMaterial, Vector3 } from 'three';
+import { DoubleSide, Euler, Group, Material, Mesh, MeshBasicMaterial, Vector3 } from 'three';
 import throttle from 'lodash.throttle';
 
 import { playerFootPrint } from '../../textures';
@@ -11,6 +11,7 @@ class PlayerFootPrint {
   private material = new MeshBasicMaterial({
     transparent: true,
     map: playerFootPrint,
+    side: DoubleSide,
   });
 
   public footPrintGroup = new Group();
@@ -19,16 +20,16 @@ class PlayerFootPrint {
     const geometry = new DecalGeometry(surface, new Vector3(), new Euler(), this.size);
     const mesh = new Mesh(geometry, this.material.clone());
 
-    //?? texture is upside down
+    mesh.renderOrder = -1; //rendered above player mesh
+    mesh.rotateZ(Math.PI); //texture is upside down
+    mesh.rotateZ(rotation.z);
+    mesh.position.add(position);
 
     if (this.isLeft) {
-      mesh.position.add(position);
-      mesh.rotateZ(rotation.z);
       mesh.translateX(-0.05);
     } else {
-      mesh.position.add(position);
-      mesh.rotateZ(rotation.z);
       mesh.translateX(0.05);
+      mesh.rotateY(Math.PI);
     }
 
     this.footPrintGroup.add(mesh);
