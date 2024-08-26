@@ -1,4 +1,5 @@
 import { Vector3 } from 'three';
+import Stats from 'stats.js';
 
 import { handleWindowResize } from './event-handlers';
 import { createPerspectiveCamera, createPlayer, createPlayerAttack, createSceneBase } from './objects';
@@ -10,9 +11,11 @@ const app = document.getElementById('app')!;
 
 const renderer = getMainRenderer();
 
-app.append(renderer.domElement);
+const stats = new Stats();
 
-const scene = createSceneBase();
+app.append(renderer.domElement, stats.dom);
+
+const { scene, surface } = createSceneBase();
 const player = createPlayer();
 const camera = createPerspectiveCamera();
 const playerAttack = createPlayerAttack();
@@ -34,12 +37,15 @@ scene.add(player.group);
 scene.add(crate, crate2, ...trees);
 
 const animate = () => {
+  stats.begin();
   const direction = new Vector3(...keyboardController.direction);
 
-  player.render(direction, scene);
+  player.render(direction, scene, surface);
   camera.position.add(direction);
   playerAttack.render(camera);
+
   renderer.render(scene, camera);
+  stats.end();
 };
 
 renderer.setAnimationLoop(animate);
