@@ -2,11 +2,11 @@ import { BackSide, FrontSide, Group, Mesh, MeshBasicMaterial, PerspectiveCamera,
 import { mouseController } from '../../controllers';
 
 import { playerAttack } from '../../textures';
-import { createPlayerAttackPointLight } from '../lights';
+import { createPlayerAttackPointLight, particleClass } from '../lights';
 
 export const createPlayerAttack = () => {
   const group = new Group();
-  const geometry = new PlaneGeometry(0.4, 0.4);
+  const geometry = new PlaneGeometry(0.2, 0.2);
   const material = new MeshBasicMaterial({
     side: FrontSide,
     transparent: true,
@@ -37,6 +37,7 @@ export const createPlayerAttack = () => {
 
       group.position.lerp(vectorBase.clampLength(0, 1), 0.2);
       group.visible = !(group.position.distanceTo(new Vector3()) < 0.1);
+      particleClass.render(group.position.clone().add(camera.position), mouseController.keyPressed);
     },
   };
 };

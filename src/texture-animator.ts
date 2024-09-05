@@ -46,7 +46,7 @@ export class TextureAnimator {
       this.currentDisplayTime -= this.tileDisplayDuration;
       this.currentTile++;
 
-      if (this.currentTile === this.numberOfTiles) {
+      if (this.currentTile > this.numberOfTiles) {
         this.currentTile = 0;
       }
 
