@@ -2,7 +2,7 @@ import { Vector3 } from 'three';
 import Stats from 'stats.js';
 
 import { handleWindowResize } from './event-handlers';
-import { createPerspectiveCamera, createPlayer, createPlayerAttack, createSceneBase } from './objects';
+import { createPerspectiveCamera, createPlayer, createPlayerAttack, createSceneBase, particleClass } from './objects';
 import { keyboardController } from './controllers';
 import { createCrate, createDeadTree } from './objects/miscellaneous';
 import { getMainRenderer } from './main-renderer';
@@ -33,7 +33,7 @@ handleWindowResize(camera, renderer);
 player.group.add(playerAttack.group);
 
 scene.add(camera);
-scene.add(player.group);
+scene.add(player.group, particleClass.particleGroup);
 scene.add(crate, crate2, ...trees);
 
 const animate = () => {
