@@ -2,7 +2,7 @@ import { Vector3 } from 'three';
 import Stats from 'stats.js';
 
 import { handleWindowResize } from './event-handlers';
-import { createPerspectiveCamera, createPlayer, createPlayerAttack, createSceneBase, particleClass } from './objects';
+import { createPerspectiveCamera, createPlayer, createPlayerAttack, createSceneBase, particleClass, SnowClass } from './objects';
 import { keyboardController } from './controllers';
 import { createCrate, createDeadTree } from './objects/miscellaneous';
 import { getMainRenderer } from './main-renderer';
@@ -19,6 +19,7 @@ const { scene, surface } = createSceneBase();
 const player = createPlayer();
 const camera = createPerspectiveCamera();
 const playerAttack = createPlayerAttack();
+const snowClass = new SnowClass(surface);
 const crate = createCrate({ size: 0.5, position: new Vector3(0.5, 1) });
 const crate2 = createCrate({ size: 0.5, position: new Vector3(1, 0.5) });
 
@@ -35,6 +36,7 @@ player.group.add(playerAttack.group);
 scene.add(camera);
 scene.add(player.group, particleClass.particleGroup);
 scene.add(crate, crate2, ...trees);
+scene.add(snowClass.points);
 
 const animate = () => {
   stats.begin();
@@ -43,6 +45,7 @@ const animate = () => {
   player.render(direction, scene, surface);
   camera.position.add(direction);
   playerAttack.render(camera);
+  snowClass.render();
 
   renderer.render(scene, camera);
   stats.end();
