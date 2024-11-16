@@ -6,5 +6,7 @@ export const createPerspectiveCamera = () => {
 
   camera.position.z = cameraSettings.far;
 
+  camera.layers.enable(31);
+
   return camera;
 };
